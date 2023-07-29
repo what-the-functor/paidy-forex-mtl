@@ -1,5 +1,3 @@
-<img src="/paidy.png?raw=true" width=300 style="background-color:white;">
-
 # Paidy Take-Home Coding Exercises
 
 ## What to expect?
@@ -19,7 +17,7 @@ Build a local proxy for getting Currency Exchange Rates
 
 ## Requirements
 
-[Forex](forex-mtl) is a simple application that acts as a local proxy for getting exchange rates. It's a service that can be consumed by other internal services to get the exchange rate between a set of currencies, so they don't have to care about the specifics of third-party providers.
+Forex is a simple application that acts as a local proxy for getting exchange rates. It's a service that can be consumed by other internal services to get the exchange rate between a set of currencies, so they don't have to care about the specifics of third-party providers.
 
 We provide you with an initial scaffold for the application with some dummy interpretations/implementations. For starters we would like you to try and understand the structure of the application, so you can use this as the base to address the following use case:
 
