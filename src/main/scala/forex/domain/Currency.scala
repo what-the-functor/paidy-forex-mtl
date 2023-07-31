@@ -15,7 +15,7 @@ object Currency {
   case object SGD extends Currency
   case object USD extends Currency
 
-  implicit val show: Show[Currency] = Show.show {
+  implicit def show[A <: Currency]: Show[A] = Show.show {
     case AUD => "AUD"
     case CAD => "CAD"
     case CHF => "CHF"
