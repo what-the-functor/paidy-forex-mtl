@@ -1,12 +1,15 @@
 package forex.http
 package rates
 
-import forex.domain.Currency.show
+import cats.effect.Sync
+import forex.domain.Currency._
 import forex.domain.Rate.Pair
 import forex.domain._
 import io.circe._
 import io.circe.generic.extras.Configuration
-import io.circe.generic.extras.semiauto.deriveConfiguredEncoder
+import io.circe.generic.extras.semiauto._
+import org.http4s.EntityDecoder
+import org.http4s.circe._
 
 object Protocol {
 
@@ -23,6 +26,19 @@ object Protocol {
       price: Price,
       timestamp: Timestamp
   )
+
+  def toRate(r: GetApiResponse) =
+    Rate(
+      Rate.Pair(r.from, r.to),
+      r.price,
+      r.timestamp
+    )
+
+  implicit val responseDecoder: Decoder[GetApiResponse] =
+    Decoder.forProduct4("from", "to", "price", "time_stamp")(GetApiResponse)
+
+  implicit def responseEntityDecoder[F[_]: Sync]: EntityDecoder[F, List[GetApiResponse]] =
+    jsonOf[F, List[GetApiResponse]]
 
   implicit val currencyEncoder: Encoder[Currency] =
     Encoder.instance[Currency] { show.show _ andThen Json.fromString }

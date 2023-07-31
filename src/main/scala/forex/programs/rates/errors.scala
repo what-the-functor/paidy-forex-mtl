@@ -10,6 +10,12 @@ object errors {
   }
 
   def toProgramError(error: RatesServiceError): Error = error match {
-    case RatesServiceError.OneFrameLookupFailed(msg) => Error.RateLookupFailed(msg)
+    case RatesServiceError.OneFrameLookupFailed(msg) => Error.RateLookupFailed(s"Unknown error: $msg")
+    case RatesServiceError.RateDeserializationFailed(msg) =>
+      Error.RateLookupFailed(s"Unable to deserialize rate from upstream service. $msg")
+    case RatesServiceError.UnknownRateLookupFailure(msg) =>
+      Error.RateLookupFailed(msg)
+  
+    case _ => Error.RateLookupFailed("Unknown Error!!!")
   }
 }
