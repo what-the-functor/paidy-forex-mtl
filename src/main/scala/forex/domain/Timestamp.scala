@@ -5,6 +5,12 @@ import java.time.OffsetDateTime
 case class Timestamp(value: OffsetDateTime) extends AnyVal
 
 object Timestamp {
-  def now: Timestamp =
+
+  /**
+   * The current time with offset from GMT
+   *
+   * Do not use in production
+   */
+  def nowUnsafe: Timestamp =
     Timestamp(OffsetDateTime.now)
 }
