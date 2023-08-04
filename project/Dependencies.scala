@@ -10,16 +10,19 @@ object Dependencies {
     val circe               = "0.13.0"
     val pureConfig          = "0.14.1"
 
-    val kindProjector       = "0.10.3"
-    val logback             = "1.2.3"
-    val scalaCheck          = "1.15.3"
-    val scalaTest           = "3.2.7"
-    val catsScalaCheck      = "0.3.0"
+    val kindProjector   = "0.10.3"
+    val logback         = "1.2.3"
+    val scalaCheck      = "1.15.3"
+    val scalaTest       = "3.2.7"
+    val catsScalaCheck  = "0.3.0"
+    val munit           = "0.7.29"
+    val munitCatsEffect = "1.0.7"
   }
 
   object Libraries {
-    def circe(artifact: String): ModuleID = "io.circe"    %% artifact % Versions.circe
-    def http4s(artifact: String): ModuleID = "org.http4s" %% artifact % Versions.http4s
+    def circe(artifact: String): ModuleID      = "io.circe"         %% artifact % Versions.circe
+    def http4s(artifact: String): ModuleID     = "org.http4s"       %% artifact % Versions.http4s
+    def munit(artifact: String): ModuleID      = "org.scalameta"    %% artifact % Versions.munit
 
     lazy val cats                = "org.typelevel"         %% "cats-core"                  % Versions.cats
     lazy val catsEffect          = "org.typelevel"         %% "cats-effect"                % Versions.catsEffect
