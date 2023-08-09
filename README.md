@@ -1,4 +1,21 @@
-# Paidy Forex Exercise - Tony Merlin
+# Paidy Forex Exercise - [Tony Merlin](mailto:tony@tonymerlin.com)
+
+## To run
+I have included a docker compose file to configure one-frame, with port 8081 exposed (the forex-mtl service is configured on port 8080).
+
+```shell
+docker-compose up
+```
+
+or
+```shell
+podman-compose up
+```
+
+Then start the service
+```shell
+sbt run
+```
 
 ## Requirements
 The project requrements are echoed here:
@@ -100,10 +117,28 @@ Caching comes down to three choices: *Scalacache*, *Jujiu*, and *Mules*.
 *Jujiu* is arguably more purely functional than *Scalacache*, and I've used it before.  
 I chose to use *Mules* due to the fact that there is good interop with the Typelevel ecosystem, and the contributors are familiar.
 
+### Type class instances
+Following most Typelevel libraries, I usually put type class instances in traits organized by the type for which they apply.
+For example an `Eq` instance for `Currency` would be in package `forex.instances`, in trait `Currency`.
+
+Instances for a specific library would be in a specific package for that library. For example, `forex.compat.circe`.
+
+For simplicity, and consistency with the current codebase; I have put all type class instances in the companion object of the type, or its parent object.
+
 ### Rate batching
 
 There are 1440 minutes per day; with 288 consecutive periods of 5 minutes. This is far below the one-frame limit of 1000 requests per day.  
 The batch interval is reduced, in order to provide a better customer experience, and maximise the usage of the one-frame service.  
+
+### Testing
+
+I consider a test case to be an *edge*, and thus have allowed for calls to unsafe methods in tests.
+
+### Future improvements
+
+- Verbose errors
+- Tests without calls to unsafe methods
+- Integration/Feature tests
 
 ## About my development environment
 
