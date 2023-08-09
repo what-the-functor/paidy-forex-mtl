@@ -10,6 +10,7 @@ import org.http4s._
 import org.http4s.client.Client
 import org.http4s.implicits._
 import org.http4s.server.middleware.AutoSlash
+import org.http4s.server.middleware.Caching
 import org.http4s.server.middleware.Timeout
 
 import scala.concurrent.duration._
@@ -32,6 +33,9 @@ class Module[F[_]: Concurrent: Timer](client: Client[F], config: ApplicationConf
     }
   }
 
+  private val cacheControMiddleware: TotalMiddleware =
+    Caching.privateCache(5.minutes, _)
+
   private val appMiddleware: TotalMiddleware = { http: HttpApp[F] =>
     Timeout(config.http.timeout)(http)
   }
@@ -39,6 +43,6 @@ class Module[F[_]: Concurrent: Timer](client: Client[F], config: ApplicationConf
   private val http: HttpRoutes[F] = ratesHttpRoutes
 
   val httpApp: HttpApp[F] =
-    appMiddleware(routesMiddleware(http).orNotFound)
+    appMiddleware(cacheControMiddleware(routesMiddleware(http).orNotFound))
 
 }
