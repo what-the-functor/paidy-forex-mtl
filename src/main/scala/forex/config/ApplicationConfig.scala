@@ -17,4 +17,4 @@ case class HttpConfig(
 
 case class CacheConfig(ttl: FiniteDuration)
 
-case class OneFrameConfig(ratesEndpoint: Uri)
+case class OneFrameConfig(ratesEndpoint: Uri, token: String)

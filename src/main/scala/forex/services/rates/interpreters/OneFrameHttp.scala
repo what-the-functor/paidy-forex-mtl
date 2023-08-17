@@ -24,7 +24,7 @@ class OneFrameHttp[F[_]: Sync](config: OneFrameConfig)(client: Client[F]) extend
     withOneFrameParams(config.ratesEndpoint)
 
   private def oneFrameRequest(pair: Set[Rate.Pair]): Request[F] =
-    Request(Method.GET, oneFrameUri(pair), headers = Headers(Header("token", "10dc303535874aeccc86a8251e6992f5")))
+    Request(Method.GET, oneFrameUri(pair), headers = Headers(Header("token", config.token)))
 
   def get(pair: Rate.Pair): F[Error Either Rate] =
     (for {
